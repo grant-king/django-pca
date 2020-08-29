@@ -1,6 +1,7 @@
 from django.db import models
 
 class SessionConfiguration(models.Model):
+    name = models.CharField(max_length=50)
     screen_size = models.CharField(max_length=10)
     cell_size = models.IntegerField()
     ruleset_name = models.CharField(max_length=50)
@@ -8,3 +9,6 @@ class SessionConfiguration(models.Model):
     processing_mode = models.IntegerField(choices=[(1, 'CPU'), (2, 'GPU')])
     show_colors = models.BooleanField()
     seed_image_path = models.FilePathField(path='D:\chaos\extra')
+
+    def __str__(self):
+        return self.name
