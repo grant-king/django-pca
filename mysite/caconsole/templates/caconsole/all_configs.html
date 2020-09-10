@@ -1,0 +1,11 @@
+<a href="{% url 'index' %}">Index</a>
+{% if all_configurations %}
+<ul>
+{% for config in all_configurations %}
+<li>
+    <a href="{% url 'run-config' config.id %}">Run {{ config.name }}</a><br>
+    <a href="{% url 'config-detail' config.id %}">{{ config.name }} detail</a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}

@@ -3,9 +3,8 @@ from django.http import HttpResponse
 from .models import SessionConfiguration
 import pythoncellularautomata.models.session_models as pca
 
-
 def index(request):
-    return HttpResponse("You're at the cellular automata console index.")
+    return render(request, 'caconsole/index.html')
 
 def play_default(request):
     session_manager = pca.SessionConfigurationManager()
@@ -13,19 +12,16 @@ def play_default(request):
     return HttpResponse("This page plays the default automaton.")
 
 def all_configurations(request):
-    all_configurations = SessionConfiguration.objects.all()
-    html_configs = '<br>'.join([config.name for config in all_configurations])
-    return HttpResponse(f'All configs:<br>{html_configs}')
+    context = {
+        'all_configurations': SessionConfiguration.objects.all()
+    }
+    return render(request, 'caconsole/all_configs.html', context)
 
 def configuration_detail(request, configuration_id):
-    configuration = SessionConfiguration.objects.get(pk=configuration_id)
-    config_attributes = [
-        configuration.name,
-        configuration.ruleset_name,
-        configuration.seed_image_path,
-    ]
-    html_configuration = '<br>'.join(config_attributes)
-    return HttpResponse(f'Config Details:<br>{html_configuration}')
+    context = {
+        'configuration': SessionConfiguration.objects.get(pk=configuration_id)
+    }
+    return render(request, 'caconsole/config_detail.html', context)
 
 def play_configuration(request, configuration_id):
     configuration = SessionConfiguration.objects.get(pk=configuration_id)
@@ -39,7 +35,7 @@ def play_configuration(request, configuration_id):
         configuration.seed_image_path
     )
     sim = pca.CellularAutomatonSession(pca_configuration)
-    return HttpResponse(f'That was configuration: {configuration_id}')
+    return HttpResponse(f'{configuration.name} simulation has been stopped.')
 
 
 

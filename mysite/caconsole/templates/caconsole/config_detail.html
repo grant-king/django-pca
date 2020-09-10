@@ -1,0 +1,12 @@
+<a href="{% url 'index' %}">Index</a><br>
+<a href="{% url 'all-configs' %}">View all configs</a>
+{% if configuration %}
+<h3>{{ configuration.name }} Details</h3>
+<ul>
+<li>Name: {{ configuration.name }}</li>
+<li>Screen Size: {{ configuration.screen_size }}</li>
+<li>Ruleset: {{ configuration.ruleset_name }}</li>
+<li>Image: {{ configuration.seed_image_path }}</li>
+</ul>
+<a href="{% url 'run-config' configuration.id %}">Run {{ configuration.name }}</a><br>
+{% endif %}
