@@ -35,7 +35,8 @@ def play_configuration(request, configuration_id):
         configuration.seed_image_path
     )
     sim = pca.CellularAutomatonSession(pca_configuration)
-    return HttpResponse(f'{configuration.name} simulation has been stopped.')
+    
+    return render(request, 'caconsole/config_detail.html', context={'configuration': configuration})
 
 
 
